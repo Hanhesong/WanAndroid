@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Built application files
 *.apk
 *.ap_
@@ -9,6 +10,19 @@
 *.class
 
 # Generated files
+=======
+# Built application 文件
+*.apk
+*.ap_
+
+# ART/Dalvik VM 文件
+*.dex
+
+# Java class 文件
+*.class
+
+# Generated 文件夹
+>>>>>>> start WanAndroid project and complete WelcomeActivity
 bin/
 gen/
 out/
@@ -17,6 +31,7 @@ out/
 .gradle/
 build/
 
+<<<<<<< HEAD
 # Local configuration file (sdk path, etc)
 local.properties
 
@@ -27,12 +42,28 @@ proguard/
 *.log
 
 # Android Studio Navigation editor temp files
+=======
+# 本地配置文件 (sdk path, etc)
+local.properties
+
+# Eclipse生成的Proguard文件夹
+proguard/
+
+# 日志文件
+*.log
+
+# Android Studio导航编辑器临时文件
+>>>>>>> start WanAndroid project and complete WelcomeActivity
 .navigation/
 
 # Android Studio captures folder
 captures/
 
+<<<<<<< HEAD
 # IntelliJ
+=======
+# IntelliJ (IDE配置文件)
+>>>>>>> start WanAndroid project and complete WelcomeActivity
 *.iml
 .idea/workspace.xml
 .idea/tasks.xml
@@ -42,6 +73,7 @@ captures/
 .idea/libraries
 .idea/caches
 
+<<<<<<< HEAD
 # Keystore files
 # Uncomment the following line if you do not want to check your keystore files in.
 #*.jks
@@ -53,13 +85,34 @@ captures/
 google-services.json
 
 # Freeline
+=======
+# 密钥储存库文件
+# 如果您不想检查密钥库文件，请取消注释以下行
+#*.jks
+
+# 在Android Studio 2.2及更高版本中生成的外部原生构建文件夹
+.externalNativeBuild
+
+# Google服务 (e.g. APIs or Firebase)
+google-services.json
+
+# Freeline (Android 平台上的秒级编译方案)
+>>>>>>> start WanAndroid project and complete WelcomeActivity
 freeline.py
 freeline/
 freeline_project_description.json
 
+<<<<<<< HEAD
 # fastlane
+=======
+# fastlane (自动化打包框架)
+>>>>>>> start WanAndroid project and complete WelcomeActivity
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
+<<<<<<< HEAD
 fastlane/readme.md
+=======
+fastlane/readme.md
+>>>>>>> start WanAndroid project and complete WelcomeActivity
