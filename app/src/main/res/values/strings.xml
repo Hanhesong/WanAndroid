@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Wan Android</string>
     <string name="jump_over">跳过</string>
+    <string name="definited">确定</string>
 </resources>

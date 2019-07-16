@@ -19,28 +19,34 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.hhs.wanandroid.ui.BaseActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.banner)
     Banner banner;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    protected int getLayoutResID() {
+        return R.layout.activity_main;
+    }
 
+    @Override
+    protected void initViews() {
+        super.initViews();
+        bannerAutoPlay();
+    }
+
+    private void bannerAutoPlay() {
         String[] imagePath = getResources().getStringArray(R.array.imagePath);
         List list = new ArrayList(Arrays.asList(imagePath));
-       // banner.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT/4));
         banner.setAutoPlay(true)
                 .setPages(list, new CustomViewHolder())
                 .setDelayTime(3000)
                 .start();
     }
 
-    public class CustomViewHolder implements BannerViewHolder<Object> {
+    private class CustomViewHolder implements BannerViewHolder<Object> {
         private ImageView mImageView;
 
         @Override

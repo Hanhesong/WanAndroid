@@ -12,24 +12,26 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.hhs.wanandroid.ui.BaseActivity;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
 
     private int countDown = 5;
     private Timer timer = new Timer();
     private Handler handler = new Handler();
     private Runnable runnable;
 
-
     @BindView(R.id.btn_jump)
     Button btnJump;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
-        ButterKnife.bind(this);
+    protected int getLayoutResID() {
+        return R.layout.activity_welcome;
+    }
 
+    @Override
+    protected void initViews() {
+        super.initViews();
         timer.schedule(task, 1000, 1000);
         handler.postDelayed(runnable = new Runnable() {
             @Override
