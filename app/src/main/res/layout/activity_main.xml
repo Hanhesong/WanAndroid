@@ -14,17 +14,11 @@
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/rb_view"
-        android:layout_alignBottom="@+id/banner">
+        android:layout_height="match_parent"
+        android:layout_below="@id/banner"
+        android:layout_above="@id/rb_view"
+        >
     </FrameLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:layout_above="@id/rg_bottom"
-        android:layout_marginBottom="2dp" />
-
 
     <com.github.mmin18.widget.RealtimeBlurView
         android:id="@+id/rb_view"
@@ -50,6 +44,7 @@
             android:drawableTop="@drawable/selector_bottom_home"
             android:drawablePadding="2dp"
             android:gravity="center"
+            android:checked="true"
             android:text="@string/home_page"
             android:textSize="12sp" />
 

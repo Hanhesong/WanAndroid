@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.hhs.wanandroid.ui.BaseActivity;
 
 public class MainActivity extends BaseActivity {
@@ -33,6 +35,9 @@ public class MainActivity extends BaseActivity {
     RadioButton rbPublicNumber;
 
     private HomePageFragment homePageFragment;
+    private StructureFragment structureFragment;
+    private ProjectFragment projectFragment;
+    private PublicNumberFragment publicNumberFragment;
 
     @Override
     protected int getLayoutResID() {
@@ -43,14 +48,42 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         super.initData();
         bannerAutoPlay();
+        homePageFragment = new HomePageFragment();
+        structureFragment = new StructureFragment();
+        projectFragment = new ProjectFragment();
+        publicNumberFragment = new PublicNumberFragment();
         setDefultFragment();
     }
 
     private void setDefultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        homePageFragment = new HomePageFragment();
-        transaction.replace(R.id.fl_content,homePageFragment);
+        transaction.replace(R.id.fl_content, homePageFragment);
+        transaction.commit();
+    }
+
+    @OnClick({R.id.rb_homePage, R.id.rb_structure, R.id.rb_project, R.id.rb_publicNumber})
+    public void clickBottomButton(Button button) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        switch (button.getId()) {
+            case R.id.rb_homePage:
+                transaction.replace(R.id.fl_content, homePageFragment);
+                break;
+            case R.id.rb_structure:
+                transaction.replace(R.id.fl_content, structureFragment);
+
+                break;
+            case R.id.rb_project:
+                transaction.replace(R.id.fl_content, projectFragment);
+
+                break;
+            case R.id.rb_publicNumber:
+                transaction.replace(R.id.fl_content, publicNumberFragment);
+
+                break;
+        }
+
         transaction.commit();
     }
 
