@@ -19,10 +19,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResID());
         ButterKnife.bind(this);
-        initViews();
+        initData();
     }
 
-    protected void initViews() {
+    protected void initData() {
     }
 
     //声明为抽象的，让子类继承从而加载布局
@@ -40,5 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         builder.setPositiveButton(getString(R.string.definited), onClickListener);
         builder.create().show();
     }
+
+
 
 }

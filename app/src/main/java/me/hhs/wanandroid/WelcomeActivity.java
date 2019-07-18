@@ -2,15 +2,12 @@ package me.hhs.wanandroid;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Button;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.hhs.wanandroid.ui.BaseActivity;
 
@@ -30,8 +27,8 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
-    protected void initViews() {
-        super.initViews();
+    protected void initData() {
+        super.initData();
         timer.schedule(task, 1000, 1000);
         handler.postDelayed(runnable = new Runnable() {
             @Override
