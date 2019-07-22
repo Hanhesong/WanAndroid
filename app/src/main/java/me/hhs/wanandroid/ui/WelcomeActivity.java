@@ -1,4 +1,4 @@
-package me.hhs.wanandroid;
+package me.hhs.wanandroid.ui;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -9,7 +9,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.hhs.wanandroid.ui.BaseActivity;
+import me.hhs.wanandroid.R;
 
 public class WelcomeActivity extends BaseActivity {
 

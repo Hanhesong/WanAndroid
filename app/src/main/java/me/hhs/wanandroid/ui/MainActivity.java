@@ -1,4 +1,4 @@
-package me.hhs.wanandroid;
+package me.hhs.wanandroid.ui;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +19,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.hhs.wanandroid.ui.BaseActivity;
+import me.hhs.wanandroid.fragment.HomePageFragment;
+import me.hhs.wanandroid.fragment.ProjectFragment;
+import me.hhs.wanandroid.fragment.PublicNumberFragment;
+import me.hhs.wanandroid.R;
+import me.hhs.wanandroid.fragment.StructureFragment;
 
 public class MainActivity extends BaseActivity {
 
