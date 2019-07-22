@@ -10,6 +10,7 @@ import java.util.List;
 import butterknife.BindView;
 import me.hhs.wanandroid.R;
 import me.hhs.wanandroid.RecyclerViewAdapter;
+import me.hhs.wanandroid.entity.ArticleBean;
 import me.hhs.wanandroid.fragment.BaseFragment;
 
 /**
@@ -18,7 +19,7 @@ import me.hhs.wanandroid.fragment.BaseFragment;
 public class HomePageFragment extends BaseFragment {
 
     private RecyclerViewAdapter adapter;
-    private List<String> list;
+    private List<ArticleBean> list;
     private RecyclerView.LayoutManager layoutManager;
 
    @BindView(R.id.home_rv)

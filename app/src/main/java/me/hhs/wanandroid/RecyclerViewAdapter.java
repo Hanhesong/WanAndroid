@@ -9,15 +9,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.List;
 
+import me.hhs.wanandroid.entity.ArticleBean;
+
 /**
  * Created by KevinSong on 2019/7/22
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private List<String> list;
+    private List<ArticleBean> list;
     private Context mContext;
 
-    public RecyclerViewAdapter(List<String> list, Context context) {
+    public RecyclerViewAdapter(List<ArticleBean> list, Context context) {
         this.list = list;
         this.mContext = context;
     }
@@ -53,10 +55,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
-        myViewHolder.tvArticleTitle.setText(list.get(i));
-        myViewHolder.tvArticleAuthor.setText(list.get(i));
-        myViewHolder.tvArticleCategory.setText(list.get(i));
-        myViewHolder.tvArtlcleDate.setText(list.get(i));
+        myViewHolder.tvArticleTitle.setText(list.get(i).getTitle());
+        myViewHolder.tvArticleAuthor.setText(list.get(i).getAuthor());
+        myViewHolder.tvArticleCategory.setText(list.get(i).getSuperCapterName()+list.get(i).getChapterName());
+        myViewHolder.tvArtlcleDate.setText(list.get(i).getPublishTime()+"");
         //Glide.with(mContext).load().into(myViewHolder.ibCollect);
 
     }
