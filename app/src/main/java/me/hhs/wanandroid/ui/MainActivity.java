@@ -27,8 +27,7 @@ import me.hhs.wanandroid.fragment.StructureFragment;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.banner)
-    Banner banner;
+
     @BindView(R.id.rb_homePage)
     RadioButton rbHomePage;
     @BindView(R.id.rb_structure)
@@ -51,7 +50,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        bannerAutoPlay();
+
         homePageFragment = new HomePageFragment();
         structureFragment = new StructureFragment();
         projectFragment = new ProjectFragment();
@@ -91,31 +90,7 @@ public class MainActivity extends BaseActivity {
         transaction.commit();
     }
 
-    private void bannerAutoPlay() {
-        String[] imagePath = getResources().getStringArray(R.array.imagePath);
-        List list = new ArrayList(Arrays.asList(imagePath));
-        banner.setAutoPlay(true)
-                .setPages(list, new CustomViewHolder())
-                .setDelayTime(3000)
-                .start();
-    }
 
-    private class CustomViewHolder implements BannerViewHolder<Object> {
-        private ImageView mImageView;
 
-        @Override
-        public View createView(Context context) {
-            mImageView = new ImageView(context);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
-            mImageView.setLayoutParams(layoutParams);
-            mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            return mImageView;
-        }
 
-        @Override
-        public void onBind(Context context, int position, Object data) {
-            Glide.with(context).load(data).into(mImageView);
-        }
-    }
 }
