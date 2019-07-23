@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import me.hhs.wanandroid.entity.ArticleBean;
@@ -57,9 +60,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tvArticleTitle.setText(list.get(i).getTitle());
         myViewHolder.tvArticleAuthor.setText(list.get(i).getAuthor());
-        myViewHolder.tvArticleCategory.setText(list.get(i).getSuperCapterName()+list.get(i).getChapterName());
+        myViewHolder.tvArticleCategory.setText(list.get(i).getSuperCapterName() + "/"+list.get(i).getChapterName());
         myViewHolder.tvArtlcleDate.setText(list.get(i).getPublishTime()+"");
-        //Glide.with(mContext).load().into(myViewHolder.ibCollect);
+        Glide.with(mContext).load(R.drawable.selector_collect).into(myViewHolder.ibCollect);
 
     }
 

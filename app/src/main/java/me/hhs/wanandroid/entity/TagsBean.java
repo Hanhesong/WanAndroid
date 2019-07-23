@@ -2,8 +2,8 @@ package me.hhs.wanandroid.entity;
 
 public class TagsBean extends BaseBean {
     /**
-     *              "name": "问答",
-     *              "url": "/article/list/0?cid=440"
+     *     "name": "问答",
+     *     "url": "/article/list/0?cid=440"
      */
      private String name;
      private String url;

@@ -1,11 +1,13 @@
-package me.hhs.wanandroid;
+package me.hhs.wanandroid.entity;
 
 import java.util.List;
+
+import me.hhs.wanandroid.entity.BaseBean;
 
 /**
  * Created by KevinSong on 2019/7/23
  */
-public class BannerBean {
+public class BannerBean extends BaseBean {
 
     /**
      * "data"[
