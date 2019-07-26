@@ -12,17 +12,17 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import me.hhs.wanandroid.entity.ArticleBean;
+import me.hhs.wanandroid.entity.ArticleDataBean;
 
 /**
  * Created by KevinSong on 2019/7/22
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private List<ArticleBean> list;
+    private List<ArticleDataBean.ArticleData.Article> list;
     private Context mContext;
 
-    public RecyclerViewAdapter(List<ArticleBean> list, Context context) {
+    public RecyclerViewAdapter(List<ArticleDataBean.ArticleData.Article> list, Context context) {
         this.list = list;
         this.mContext = context;
     }

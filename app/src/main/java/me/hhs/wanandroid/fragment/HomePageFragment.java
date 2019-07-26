@@ -1,9 +1,9 @@
 package me.hhs.wanandroid.fragment;
 
 import android.content.Context;
-import android.content.SyncStatusObserver;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,8 +21,10 @@ import me.hhs.wanandroid.entity.BannerBean;
 import me.hhs.wanandroid.GetBannerRequest;
 import me.hhs.wanandroid.R;
 import me.hhs.wanandroid.RecyclerViewAdapter;
-import me.hhs.wanandroid.entity.ArticleBean;
-import me.hhs.wanandroid.entity.SuperHomePageBean;
+import me.hhs.wanandroid.entity.ArticleDataBean;
+import me.hhs.wanandroid.presenter.GetArticlesPresenterImpl;
+import me.hhs.wanandroid.presenter.IGetArticlesPresenter;
+import me.hhs.wanandroid.ui.view.IGetArticlesView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,19 +34,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by KevinSong on 2019/7/18
  */
-public class HomePageFragment extends BaseFragment {
+public class HomePageFragment extends BaseFragment implements IGetArticlesView {
 
     private RecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     List<String> imagePath = new ArrayList<>();
-    List<ArticleBean> articleList = new ArrayList<>();
-
+    List<ArticleDataBean.ArticleData.Article> articleList;
+    private IGetArticlesPresenter getArticlesPresenter;
 
     @BindView(R.id.banner)
     Banner banner;
     @BindView(R.id.home_rv)
     RecyclerView recyclerView;
-
 
     @Override
     public int getLayoutResId() {
@@ -54,20 +55,46 @@ public class HomePageFragment extends BaseFragment {
     @Override
     protected void initViews() {
         super.initViews();
-        adapter = new RecyclerViewAdapter(articleList, getContext());
-        layoutManager = new LinearLayoutManager(getContext());
     }
 
     @Override
     protected void initData() {
         super.initData();
+        getArticlesPresenter = new GetArticlesPresenterImpl(this);
+        articleList = new ArrayList<>();
         requestBanner();
-        requestArticle();
+     //   requestArticle();
         bannerAutoPlay();
+        adapter = new RecyclerViewAdapter(articleList, getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void showGetArticlesSuccess(ArticleDataBean articleDataBean) {
+        List<ArticleDataBean.ArticleData.Article> list = new ArrayList<>();
+        for (int i = 0; i < articleDataBean.getData().getDatas().size(); i++) {
+            list.add(articleDataBean.getData().getDatas().get(i));
+            Log.i("Song",articleDataBean.getData().toString());
+        }
+        articleList.clear();
+        articleList.addAll(list);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void showGetArticlesFailure(String code, String msg) {
+
+    }
+
+    @Override
+    public void showGetArticlesError(Throwable throwable) {
+
+    }
+
 
     private void requestBanner() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -83,6 +110,7 @@ public class HomePageFragment extends BaseFragment {
                 for (int i = 0; i < response.body().getData().size(); i++) {
                     l.add(response.body().getData().get(i).getImagePath());
                 }
+                imagePath.clear();
                 imagePath.addAll(l);
             }
 
@@ -93,37 +121,31 @@ public class HomePageFragment extends BaseFragment {
         });
     }
 
-
     private void requestArticle() {
-       Retrofit retrofit = new Retrofit.Builder()
-                         .baseUrl("https://www.wanandroid.com/")
-                         .addConverterFactory(GsonConverterFactory.create())
-                          .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://www.wanandroid.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         GetArticleInterface request = retrofit.create(GetArticleInterface.class);
-        Call<SuperHomePageBean> call = request.getArticle();
-        call.enqueue(new Callback<SuperHomePageBean>() {
+        Call<ArticleDataBean> call = request.getArticle();
+        call.enqueue(new Callback<ArticleDataBean>() {
             @Override
-            public void onResponse(Call<SuperHomePageBean> call, Response<SuperHomePageBean> response) {
-                 List<ArticleBean> list = new ArrayList<>();
-                 for (int i = 0; i < response.body().getData().getDatas().size();i++){
-                     list.add(response.body().getData().getDatas().get(i));
-                     System.out.println(response.body().getData().getDatas().get(i).getSuperCapterName());
-                 }
-                 articleList.clear();
-                 articleList.addAll(list);
-                 adapter.notifyDataSetChanged();
+            public void onResponse(Call<ArticleDataBean> call, Response<ArticleDataBean> response) {
+                List<ArticleDataBean.ArticleData.Article> list = new ArrayList<>();
+                for (int i = 0; i < response.body().getData().getDatas().size(); i++) {
+                    list.add(response.body().getData().getDatas().get(i));
+
+                }
+                articleList.clear();
+                articleList.addAll(list);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<SuperHomePageBean> call, Throwable t) {
+            public void onFailure(Call<ArticleDataBean> call, Throwable t) {
 
             }
         });
-
-
-
-
-
 
     }
 
@@ -132,9 +154,11 @@ public class HomePageFragment extends BaseFragment {
         //        List list = new ArrayList(Arrays.asList(imagePath));
         banner.setAutoPlay(true)
                 .setPages(imagePath, new CustomViewHolder())
+                .setCurrentPage(0)
                 .setDelayTime(3000)
                 .start();
     }
+
 
     private class CustomViewHolder implements BannerViewHolder<Object> {
         private ImageView mImageView;
@@ -153,5 +177,21 @@ public class HomePageFragment extends BaseFragment {
         public void onBind(Context context, int position, Object data) {
             Glide.with(context).load(data).into(mImageView);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (banner != null && !banner.isStart() && banner.isPrepare()) {
+            banner.startAutoPlay();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        if (banner != null && banner.isStart() && banner.isPrepare()) {
+            banner.stopAutoPlay();
+        }
+        super.onStop();
     }
 }
