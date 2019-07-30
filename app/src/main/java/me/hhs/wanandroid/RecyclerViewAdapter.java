@@ -63,7 +63,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         myViewHolder.tvArticleCategory.setText(list.get(i).getSuperCapterName() + "/"+list.get(i).getChapterName());
         myViewHolder.tvArtlcleDate.setText(list.get(i).getPublishTime()+"");
         Glide.with(mContext).load(R.drawable.selector_collect).into(myViewHolder.ibCollect);
-
     }
 
     @Override

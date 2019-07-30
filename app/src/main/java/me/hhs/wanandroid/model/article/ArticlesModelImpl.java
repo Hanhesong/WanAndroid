@@ -20,7 +20,7 @@ public class ArticlesModelImpl implements IArticlesModel, Serve {
 
     //1 获取Retrofit实例
     public ArticlesModelImpl() {
-         mretrofit = RetrofitUtils.getArticlesRetrofit(ARTICLES_BASE_URL);
+         mretrofit = RetrofitUtils.getRetrofit(BASE_URL);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ArticlesModelImpl implements IArticlesModel, Serve {
 
     //2.设计网络请求
        interface GetArticlesService{
-        @GET("0/json")
+        @GET("article/list/0/json")
         Call<ArticleDataBean> getArticle();
     }
 }

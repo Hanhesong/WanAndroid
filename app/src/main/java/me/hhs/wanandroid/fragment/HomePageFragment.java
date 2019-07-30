@@ -16,31 +16,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import me.hhs.wanandroid.GetArticleInterface;
 import me.hhs.wanandroid.entity.BannerBean;
-import me.hhs.wanandroid.GetBannerRequest;
 import me.hhs.wanandroid.R;
 import me.hhs.wanandroid.RecyclerViewAdapter;
 import me.hhs.wanandroid.entity.ArticleDataBean;
-import me.hhs.wanandroid.presenter.GetArticlesPresenterImpl;
-import me.hhs.wanandroid.presenter.IGetArticlesPresenter;
+import me.hhs.wanandroid.presenter.article.GetArticlesPresenterImpl;
+import me.hhs.wanandroid.presenter.article.IGetArticlesPresenter;
+import me.hhs.wanandroid.presenter.banner.GetBannerPresenterImpl;
+import me.hhs.wanandroid.presenter.banner.IGetBannerPresenter;
 import me.hhs.wanandroid.ui.view.IGetArticlesView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import me.hhs.wanandroid.ui.view.IGetBannerView;
 
 /**
  * Created by KevinSong on 2019/7/18
  */
-public class HomePageFragment extends BaseFragment implements IGetArticlesView {
+public class HomePageFragment extends BaseFragment implements IGetArticlesView, IGetBannerView {
 
     private RecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     List<String> imagePath = new ArrayList<>();
     List<ArticleDataBean.ArticleData.Article> articleList;
     private IGetArticlesPresenter getArticlesPresenter;
+    private IGetBannerPresenter getBannerPresenter;
 
     @BindView(R.id.banner)
     Banner banner;
@@ -61,15 +58,17 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView {
     protected void initData() {
         super.initData();
         getArticlesPresenter = new GetArticlesPresenterImpl(this);
+        getBannerPresenter = new GetBannerPresenterImpl(this);
         articleList = new ArrayList<>();
-        requestBanner();
-     //   requestArticle();
-        bannerAutoPlay();
+        // requestBanner();
         adapter = new RecyclerViewAdapter(articleList, getContext());
         layoutManager = new LinearLayoutManager(getContext());
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        getArticlesPresenter.getArticles(getContext());
+        getBannerPresenter.getBanner(getContext());
+        bannerAutoPlay();
     }
 
     @Override
@@ -77,7 +76,7 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView {
         List<ArticleDataBean.ArticleData.Article> list = new ArrayList<>();
         for (int i = 0; i < articleDataBean.getData().getDatas().size(); i++) {
             list.add(articleDataBean.getData().getDatas().get(i));
-            Log.i("Song",articleDataBean.getData().toString());
+            Log.i("Song", articleDataBean.getData().toString());
         }
         articleList.clear();
         articleList.addAll(list);
@@ -95,63 +94,7 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView {
 
     }
 
-
-    private void requestBanner() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.wanandroid.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        GetBannerRequest request = retrofit.create(GetBannerRequest.class);
-        Call<BannerBean> call = request.getBannerCall();
-        call.enqueue(new Callback<BannerBean>() {
-            @Override
-            public void onResponse(Call<BannerBean> call, Response<BannerBean> response) {
-                List<String> l = new ArrayList<>();
-                for (int i = 0; i < response.body().getData().size(); i++) {
-                    l.add(response.body().getData().get(i).getImagePath());
-                }
-                imagePath.clear();
-                imagePath.addAll(l);
-            }
-
-            @Override
-            public void onFailure(Call<BannerBean> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void requestArticle() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.wanandroid.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        GetArticleInterface request = retrofit.create(GetArticleInterface.class);
-        Call<ArticleDataBean> call = request.getArticle();
-        call.enqueue(new Callback<ArticleDataBean>() {
-            @Override
-            public void onResponse(Call<ArticleDataBean> call, Response<ArticleDataBean> response) {
-                List<ArticleDataBean.ArticleData.Article> list = new ArrayList<>();
-                for (int i = 0; i < response.body().getData().getDatas().size(); i++) {
-                    list.add(response.body().getData().getDatas().get(i));
-
-                }
-                articleList.clear();
-                articleList.addAll(list);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<ArticleDataBean> call, Throwable t) {
-
-            }
-        });
-
-    }
-
     private void bannerAutoPlay() {
-        //       imagePath = getResources().getStringArray(R.array.imagePath);
-        //        List list = new ArrayList(Arrays.asList(imagePath));
         banner.setAutoPlay(true)
                 .setPages(imagePath, new CustomViewHolder())
                 .setCurrentPage(0)
@@ -159,6 +102,26 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView {
                 .start();
     }
 
+    @Override
+    public void showGetBannerSuccess(BannerBean bannerBean) {
+        List<String> imageList = new ArrayList<>();
+        for (int i = 0; i < bannerBean.getData().size(); i++) {
+            imageList.add(bannerBean.getData().get(i).getImagePath());
+        }
+        imagePath.clear();
+        imagePath.addAll(imageList);
+
+    }
+
+    @Override
+    public void showGetBannerFailure(String code, String msg) {
+
+    }
+
+    @Override
+    public void showGetBannerError(Throwable throwable) {
+
+    }
 
     private class CustomViewHolder implements BannerViewHolder<Object> {
         private ImageView mImageView;

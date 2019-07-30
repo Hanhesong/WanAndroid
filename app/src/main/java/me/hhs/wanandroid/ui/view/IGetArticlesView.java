@@ -7,7 +7,6 @@ import me.hhs.wanandroid.entity.ArticleDataBean;
  */
 public interface IGetArticlesView {
 
-
     void showGetArticlesSuccess(ArticleDataBean articleDataBean);
 
     void showGetArticlesFailure(String code, String msg);

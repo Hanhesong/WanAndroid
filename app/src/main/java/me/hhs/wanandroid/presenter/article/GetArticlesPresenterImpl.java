@@ -1,4 +1,4 @@
-package me.hhs.wanandroid.presenter;
+package me.hhs.wanandroid.presenter.article;
 
 import android.content.Context;
 
