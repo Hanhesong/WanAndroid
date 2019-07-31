@@ -43,6 +43,9 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     // retrofit converter : string
     api 'com.squareup.retrofit2:converter-scalars:2.3.0'
+     //SmartRefreshLayout
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32'//没有使用特殊Header，可以不加这行
 
 
 

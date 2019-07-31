@@ -1,18 +1,24 @@
 package me.hhs.wanandroid.fragment;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ms.banner.Banner;
 import com.ms.banner.holder.BannerViewHolder;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,7 +36,7 @@ import me.hhs.wanandroid.ui.view.IGetBannerView;
 /**
  * Created by KevinSong on 2019/7/18
  */
-public class HomePageFragment extends BaseFragment implements IGetArticlesView, IGetBannerView {
+public class HomePageFragment extends BaseFragment implements IGetArticlesView, IGetBannerView, OnRefreshListener {
 
     private RecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -43,6 +49,11 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
     Banner banner;
     @BindView(R.id.home_rv)
     RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+    // TODO: 2019/7/31 emptyView 
+//    @BindView(R.id.empty_view)
+//    TextView tvEmpty;
 
     @Override
     public int getLayoutResId() {
@@ -63,12 +74,14 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         // requestBanner();
         adapter = new RecyclerViewAdapter(articleList, getContext());
         layoutManager = new LinearLayoutManager(getContext());
+        smartRefreshLayout.setOnRefreshListener(this);
+        smartRefreshLayout.autoRefresh();
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        getArticlesPresenter.getArticles(getContext());
-        getBannerPresenter.getBanner(getContext());
-        bannerAutoPlay();
+     //   recyclerView.setEmptyView
+        //getArticlesPresenter.getArticles(getContext());
+       // getBannerPresenter.getBanner(getContext());
     }
 
     @Override
@@ -95,8 +108,8 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
     }
 
     private void bannerAutoPlay() {
-        banner.setAutoPlay(true)
-                .setPages(imagePath, new CustomViewHolder())
+        banner.setPages(imagePath, new CustomViewHolder())
+                .setAutoPlay(true)
                 .setCurrentPage(0)
                 .setDelayTime(3000)
                 .start();
@@ -110,6 +123,9 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         }
         imagePath.clear();
         imagePath.addAll(imageList);
+        //获取BannerPath成功后就可以开始轮播。但还存在连续切换fragment崩溃的bug,切换的时候banner就不更新了。
+        // TODO: 2019/7/31
+        bannerAutoPlay();
 
     }
 
@@ -121,6 +137,13 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
     @Override
     public void showGetBannerError(Throwable throwable) {
 
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        getArticlesPresenter.getArticles(getContext());
+        getBannerPresenter.getBanner(getContext());
+        smartRefreshLayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
     }
 
     private class CustomViewHolder implements BannerViewHolder<Object> {
