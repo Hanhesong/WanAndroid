@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.ms.banner.Banner;
 import com.ms.banner.holder.BannerViewHolder;
+import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ import me.hhs.wanandroid.ui.view.IGetBannerView;
 /**
  * Created by KevinSong on 2019/7/18
  */
-public class HomePageFragment extends BaseFragment implements IGetArticlesView, IGetBannerView, OnRefreshListener {
+public class HomePageFragment extends BaseFragment implements IGetArticlesView, IGetBannerView, OnRefreshListener  {
 
     private RecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -74,14 +77,22 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         // requestBanner();
         adapter = new RecyclerViewAdapter(articleList, getContext());
         layoutManager = new LinearLayoutManager(getContext());
+        //设置关于refresh的属性
+        smartRefreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         smartRefreshLayout.setOnRefreshListener(this);
         smartRefreshLayout.autoRefresh();
+        smartRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
+       //smartRefreshLayout.setRefreshHeader(new BezierRadarHeader(getContext()).setEnableHorizontalDrag(true));
+       // smartRefreshLayout.setDragRate(0.5f);//显示下拉高度/手指真实下拉高度=阻尼效果
+        //smartRefreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
+        //smartRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
+        //martRefreshLayout.setEnableLoadMore(true);
+
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-     //   recyclerView.setEmptyView
-        //getArticlesPresenter.getArticles(getContext());
-       // getBannerPresenter.getBanner(getContext());
+
+
     }
 
     @Override
@@ -141,9 +152,10 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        getArticlesPresenter.getArticles(getContext());
-        getBannerPresenter.getBanner(getContext());
-        smartRefreshLayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+         getBannerPresenter.getBanner(getContext());
+         getArticlesPresenter.getArticles(getContext());
+         refreshLayout.finishRefresh(2000);
+
     }
 
     private class CustomViewHolder implements BannerViewHolder<Object> {
