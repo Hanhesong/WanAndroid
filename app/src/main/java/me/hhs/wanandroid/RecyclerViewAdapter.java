@@ -27,16 +27,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mContext = context;
     }
 
-
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvArticleTitle;
         ImageButton ibCollect;
         TextView tvArticleAuthor;
         TextView tvArticleCategory;
         TextView tvArtlcleDate;
-
-
-
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,8 +56,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tvArticleTitle.setText(list.get(i).getTitle());
         myViewHolder.tvArticleAuthor.setText(list.get(i).getAuthor());
-        myViewHolder.tvArticleCategory.setText(list.get(i).getSuperCapterName() + "/"+list.get(i).getChapterName());
-        myViewHolder.tvArtlcleDate.setText(list.get(i).getPublishTime()+"");
+        myViewHolder.tvArticleCategory.setText(list.get(i).getSuperCapterName() + "/" + list.get(i).getChapterName());
+        myViewHolder.tvArtlcleDate.setText(list.get(i).getNiceDate());
         Glide.with(mContext).load(R.drawable.selector_collect).into(myViewHolder.ibCollect);
     }
 

@@ -8,22 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.ms.banner.Banner;
 import com.ms.banner.holder.BannerViewHolder;
-import com.scwang.smartrefresh.header.BezierCircleHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import butterknife.BindView;
 import me.hhs.wanandroid.entity.BannerBean;
 import me.hhs.wanandroid.R;
@@ -54,7 +46,7 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout smartRefreshLayout;
-    // TODO: 2019/7/31 emptyView 
+    // TODO: 2019/7/31 emptyView
 //    @BindView(R.id.empty_view)
 //    TextView tvEmpty;
 
@@ -100,7 +92,7 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         List<ArticleDataBean.ArticleData.Article> list = new ArrayList<>();
         for (int i = 0; i < articleDataBean.getData().getDatas().size(); i++) {
             list.add(articleDataBean.getData().getDatas().get(i));
-            Log.i("Song", articleDataBean.getData().toString());
+            Log.i("Song", articleDataBean.getData().getDatas().get(i).toString());
         }
         articleList.clear();
         articleList.addAll(list);

@@ -14,11 +14,11 @@ public class RetrofitUtils implements Serve {
          if (mRetrofit ==null){
              Retrofit.Builder builder = new Retrofit.Builder();
              builder.baseUrl(baseUrl);
-             builder.addConverterFactory(ScalarsConverterFactory.create());
+            // builder.addConverterFactory(ScalarsConverterFactory.create());
              builder.addConverterFactory(GsonConverterFactory.create());
+
              mRetrofit = builder.build();
          }
-
          return mRetrofit;
      }
 
