@@ -92,7 +92,6 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         List<ArticleDataBean.ArticleData.Article> list = new ArrayList<>();
         for (int i = 0; i < articleDataBean.getData().getDatas().size(); i++) {
             list.add(articleDataBean.getData().getDatas().get(i));
-            Log.i("Song", articleDataBean.getData().getDatas().get(i).toString());
         }
         articleList.clear();
         articleList.addAll(list);

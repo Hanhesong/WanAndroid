@@ -6,4 +6,8 @@
 
     <color name="colorPureWhite">#ffffff</color>
     <color name="bottom_bar_overlay">#aff5f5f5</color>
+
+    <!--文字的颜色-->
+    <color name="text_surface">#333333</color>
+
 </resources>

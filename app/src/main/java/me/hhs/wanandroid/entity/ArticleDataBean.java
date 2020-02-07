@@ -158,7 +158,7 @@ public class ArticleDataBean extends BaseBean {
             private String projectLink;
             private long publishTime;
             private int superChapterId;
-            private String superCapterName;
+            private String superChapterName;
             private String title;
             private int type;
             private int userId;
@@ -302,12 +302,12 @@ public class ArticleDataBean extends BaseBean {
                 this.superChapterId = superChapterId;
             }
 
-            public String getSuperCapterName() {
-                return superCapterName;
+            public String getSuperChapterName() {
+                return superChapterName;
             }
 
-            public void setSuperCapterName(String superCapterName) {
-                this.superCapterName = superCapterName;
+            public void setSuperChapterName(String superChapterName) {
+                this.superChapterName = superChapterName;
             }
 
             public String getTitle() {
@@ -378,7 +378,7 @@ public class ArticleDataBean extends BaseBean {
                         ", projectLink='" + projectLink + '\'' +
                         ", publishTime=" + publishTime +
                         ", superChapterId=" + superChapterId +
-                        ", superCapterName='" + superCapterName + '\'' +
+                        ", superChapterName='" + superChapterName + '\'' +
                         ", title='" + title + '\'' +
                         ", type=" + type +
                         ", userId=" + userId +
