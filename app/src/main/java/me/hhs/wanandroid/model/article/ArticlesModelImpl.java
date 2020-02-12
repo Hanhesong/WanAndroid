@@ -51,7 +51,7 @@ public class ArticlesModelImpl implements IArticlesModel, Serve {
 
     //2.设计网络请求
        interface GetArticlesService{
-        @GET("article/list/0/json")
+        @GET("article/list/1/json")
         Call<ArticleDataBean> getArticle();
     }
 }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="100dp"
+            android:clickable="true"
+            android:text="去登陆"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="ID:xxxxxx"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_user_collect"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_collect"
+            android:tint="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="1"
+            android:text="@string/user_collect" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18sp"
+            android:rotation="180"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_back"
+            android:tint="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_system_setting"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18sp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_setting"
+            android:tint="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="1"
+            android:text="@string/system_setting" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18sp"
+            android:rotation="180"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_back"
+            android:tint="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

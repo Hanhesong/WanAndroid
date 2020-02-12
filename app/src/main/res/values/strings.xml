@@ -7,8 +7,23 @@
     <string name="structure">体系</string>
     <string name="project">项目</string>
     <string name="public_number">公众号</string>
+    <string name="me">我</string>
 
     <string name="empty_view_text">数据加载中。。。</string>
 
     <string name="webView_title">文章浏览</string>
+    <string name="user_collect">我的收藏</string>
+    <string name="system_setting">系统设置</string>
+
+    <string name="user_login">登录</string>
+    <string name="user_register">注册</string>
+
+    <string name="hint_user_name">请输入用户名</string>
+    <string name="hint_user_password">请输入密码</string>
+    <string name="hint_user_password_confirm">请确认密码</string>
+
+    <string name="go_login">去登录</string>
+    <string name="go_register">去注册</string>
+
+
 </resources>

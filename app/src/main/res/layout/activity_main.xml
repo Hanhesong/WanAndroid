@@ -79,6 +79,19 @@
             android:text="@string/public_number"
             android:textSize="12sp" />
 
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rb_me"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/selector_bottom_me"
+            android:drawablePadding="2dp"
+            android:gravity="center"
+            android:text="@string/me"
+            android:textSize="12sp" />
+
+
     </RadioGroup>
 
 </RelativeLayout>
