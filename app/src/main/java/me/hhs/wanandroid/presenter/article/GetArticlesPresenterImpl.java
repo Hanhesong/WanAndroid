@@ -21,8 +21,8 @@ public class GetArticlesPresenterImpl implements IGetArticlesPresenter {
     }
 
     @Override
-    public void getArticles(Context context) {
-        model.getArticles(context, this);
+    public void getArticles(Context context,int page) {
+        model.getArticles(context, page,this);
     }
 
     @Override

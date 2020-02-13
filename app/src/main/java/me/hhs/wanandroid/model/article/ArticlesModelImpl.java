@@ -10,7 +10,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.GET;
+import retrofit2.http.HTTP;
+import retrofit2.http.Path;
 
 /**
  * Created by KevinSong on 2019/7/26
@@ -24,11 +25,11 @@ public class ArticlesModelImpl implements IArticlesModel, Serve {
     }
 
     @Override
-    public void getArticles(Context context, final IOnResponseListener<ArticleDataBean> onResponseListener) {
+    public void getArticles(Context context,int page, final IOnResponseListener<ArticleDataBean> onResponseListener) {
        //3.获取网络请求业务对象
         GetArticlesService service = mretrofit.create(GetArticlesService.class);
         //4.获取请求对象
-        Call<ArticleDataBean> call = service.getArticle();
+        Call<ArticleDataBean> call = service.getArticle(page);
         //5.设计请求对象
         Callback<ArticleDataBean> callback = new Callback<ArticleDataBean>() {
             @Override
@@ -51,7 +52,7 @@ public class ArticlesModelImpl implements IArticlesModel, Serve {
 
     //2.设计网络请求
        interface GetArticlesService{
-        @GET("article/list/1/json")
-        Call<ArticleDataBean> getArticle();
+        @HTTP(method = "GET",path = "article/list/{page}/json")
+        Call<ArticleDataBean> getArticle(@Path("page") int page);
     }
 }

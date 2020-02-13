@@ -1,5 +1,6 @@
 package me.hhs.wanandroid.ui;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import me.hhs.wanandroid.fragment.ProjectFragment;
 import me.hhs.wanandroid.fragment.PublicNumberFragment;
 import me.hhs.wanandroid.R;
 import me.hhs.wanandroid.fragment.StructureFragment;
+import me.hhs.wanandroid.utils.onDoubleClickListener;
 
 public class MainActivity extends BaseActivity {
 
@@ -37,6 +39,7 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initData() {
         super.initData();
@@ -47,6 +50,12 @@ public class MainActivity extends BaseActivity {
         publicNumberFragment = new PublicNumberFragment();
         meFragment = new MeFragment();
         setDefultFragment();
+        rbHomePage.setOnTouchListener(new onDoubleClickListener(new onDoubleClickListener.DoubleClickCallback() {
+            @Override
+            public void onDoubleClick() {
+               homePageFragment.onRefreshArticle();
+            }
+        }));
     }
 
     private void setDefultFragment() {

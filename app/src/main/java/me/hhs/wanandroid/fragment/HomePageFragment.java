@@ -13,6 +13,7 @@ import com.ms.banner.Banner;
 import com.ms.banner.holder.BannerViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import me.hhs.wanandroid.ui.view.IGetBannerView;
 /**
  * Created by KevinSong on 2019/7/18
  */
-public class HomePageFragment extends BaseFragment implements IGetArticlesView, IGetBannerView, OnRefreshListener  {
+public class HomePageFragment extends BaseFragment implements IGetArticlesView, IGetBannerView, OnRefreshListener, OnLoadMoreListener {
 
     private RecyclerViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -39,6 +40,7 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
     List<ArticleDataBean.ArticleData.Article> articleList;
     private IGetArticlesPresenter getArticlesPresenter;
     private IGetBannerPresenter getBannerPresenter;
+    private int page = 0;
 
     @BindView(R.id.banner)
     Banner banner;
@@ -72,18 +74,16 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         //设置关于refresh的属性
         smartRefreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
         smartRefreshLayout.setOnRefreshListener(this);
+        smartRefreshLayout.setOnLoadMoreListener(this);
         smartRefreshLayout.autoRefresh();
         smartRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
        //smartRefreshLayout.setRefreshHeader(new BezierRadarHeader(getContext()).setEnableHorizontalDrag(true));
        // smartRefreshLayout.setDragRate(0.5f);//显示下拉高度/手指真实下拉高度=阻尼效果
         //smartRefreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
-        //smartRefreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
-        //martRefreshLayout.setEnableLoadMore(true);
-
+        smartRefreshLayout.setEnableLoadMore(true);
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
 
     }
 
@@ -93,7 +93,9 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         for (int i = 0; i < articleDataBean.getData().getDatas().size(); i++) {
             list.add(articleDataBean.getData().getDatas().get(i));
         }
-        articleList.clear();
+        if (page==0){
+            articleList.clear();
+        }
         articleList.addAll(list);
         adapter.notifyDataSetChanged();
 
@@ -144,9 +146,17 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
          getBannerPresenter.getBanner(getContext());
-         getArticlesPresenter.getArticles(getContext());
+         getArticlesPresenter.getArticles(getContext(),0);
+         page=0;
          refreshLayout.finishRefresh(2000);
 
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        page++;
+        getArticlesPresenter.getArticles(getContext(),page);
+        refreshLayout.finishLoadMore(1000);
     }
 
     private class CustomViewHolder implements BannerViewHolder<Object> {
@@ -182,5 +192,9 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
             banner.stopAutoPlay();
         }
         super.onStop();
+    }
+
+    public void onRefreshArticle(){
+        smartRefreshLayout.autoRefresh();
     }
 }

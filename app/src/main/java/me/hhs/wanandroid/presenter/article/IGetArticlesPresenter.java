@@ -9,5 +9,5 @@ import me.hhs.wanandroid.model.IOnResponseListener;
  * Created by KevinSong on 2019/7/26
  */
 public interface IGetArticlesPresenter extends IOnResponseListener<ArticleDataBean> {
-         void  getArticles(Context context);
+         void  getArticles(Context context,int page);
 }
