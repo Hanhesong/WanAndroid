@@ -24,6 +24,12 @@
 
     <string name="go_login">去登录</string>
     <string name="go_register">去注册</string>
+    
+    <string name="login_successful">登录成功</string>
+    <string name="login_failed">登录失败</string>
+
+    <string name="register_successful">注册成功</string>
+    <string name="register_failed">注册失败</string>
 
 
 </resources>

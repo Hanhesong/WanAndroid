@@ -1,5 +1,6 @@
 package me.hhs.wanandroid.fragment;
 
+import android.content.Intent;
 import android.widget.EditText;
 
 import butterknife.BindView;
@@ -32,12 +33,17 @@ public class LoginFragment extends BaseFragment implements IGoLoginView {
 
     @Override
     public void showGoLoginSuccess(LoginBean loginBean) {
-        doToast(loginBean.getErrorCode() + loginBean.getData().getUsername());
+        doToast(getString(R.string.login_successful));
+        Intent intent = new Intent();
+        intent.putExtra("username", loginBean.getData().getUsername());
+        intent.putExtra("userid", loginBean.getData().getId());
+        getActivity().setResult(100, intent);
+        getActivity().finish();
     }
 
     @Override
     public void showGoLoginFailure(String code, String msg) {
-        doToast(code + msg);
+        doToast(getString(R.string.login_failed) + ": " + code + " " + msg);
     }
 
     @Override
