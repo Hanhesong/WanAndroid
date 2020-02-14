@@ -10,7 +10,4 @@ public interface IGetBannerView {
 
     void showGetBannerError(Throwable throwable);
 
-
-
-
 }
