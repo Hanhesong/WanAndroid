@@ -193,7 +193,7 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
         }
         super.onStop();
     }
-
+     //todo:
     public void onRefreshArticle(){
         smartRefreshLayout.autoRefresh();
     }

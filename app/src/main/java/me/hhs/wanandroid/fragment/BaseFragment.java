@@ -47,4 +47,8 @@ public abstract class BaseFragment extends Fragment {
         unbinder.unbind();
         super.onDestroyView();
     }
+
+    public BaseActivity getBaseActivity() {
+        return baseActivity;
+    }
 }

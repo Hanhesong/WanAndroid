@@ -1,5 +1,6 @@
 package me.hhs.wanandroid.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.widget.EditText;
 
@@ -10,6 +11,7 @@ import me.hhs.wanandroid.entity.LoginBean;
 import me.hhs.wanandroid.presenter.register.GoRegisterPresenterImpl;
 import me.hhs.wanandroid.presenter.register.IGoRegisterPresenter;
 import me.hhs.wanandroid.ui.view.IGoRegisterView;
+import me.hhs.wanandroid.utils.SPUtils;
 
 public class RegisterFragment extends BaseFragment implements IGoRegisterView {
 
@@ -37,9 +39,9 @@ public class RegisterFragment extends BaseFragment implements IGoRegisterView {
     public void showGoRegisterSuccess(LoginBean loginBean) {
         doToast(getString(R.string.register_successful));
         Intent intent = new Intent();
-        intent.putExtra("username", loginBean.getData().getUsername());
-        intent.putExtra("userid", loginBean.getData().getId());
-        getActivity().setResult(100, intent);
+        SPUtils.put(getBaseActivity(), "username", loginBean.getData().getUsername());
+        SPUtils.put(getBaseActivity(), "userid", "id: " + loginBean.getData().getId());
+        getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }
 

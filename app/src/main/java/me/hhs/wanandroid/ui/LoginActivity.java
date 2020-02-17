@@ -11,16 +11,19 @@ import butterknife.OnClick;
 import me.hhs.wanandroid.R;
 import me.hhs.wanandroid.fragment.LoginFragment;
 import me.hhs.wanandroid.fragment.RegisterFragment;
+import me.hhs.wanandroid.fragment.SystemSettingFragment;
 
 public class LoginActivity extends BaseActivity {
 
     private LoginFragment loginFragment;
     private RegisterFragment registerFragment;
+    private SystemSettingFragment systemSettingFragment;
+    private String from;
 
     @BindView(R.id.login_titleBar)
     TitleBar mTitleBar;
     @BindView(R.id.btn_go_login_register)
-    Button tbnGoRegister;
+    Button btnGoRegister;
 
     @Override
     protected int getLayoutResID() {
@@ -32,6 +35,8 @@ public class LoginActivity extends BaseActivity {
         super.initData();
         loginFragment = new LoginFragment();
         registerFragment = new RegisterFragment();
+        systemSettingFragment = new SystemSettingFragment();
+        from = getIntent().getStringExtra("sys");
         setDefaultFragment();
         mTitleBar.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
@@ -54,9 +59,16 @@ public class LoginActivity extends BaseActivity {
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.loginFragment_content, loginFragment);
-        transaction.commit();
-        mTitleBar.setTitle(R.string.user_login);
+        if (from == null) {
+            transaction.replace(R.id.loginFragment_content, loginFragment);
+            transaction.commit();
+            mTitleBar.setTitle(R.string.user_login);
+        } else {
+            transaction.replace(R.id.loginFragment_content, systemSettingFragment);
+            transaction.commit();
+            mTitleBar.setTitle(R.string.system_setting);
+            btnGoRegister.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.btn_go_login_register)
@@ -66,7 +78,7 @@ public class LoginActivity extends BaseActivity {
         transaction.replace(R.id.loginFragment_content, registerFragment);
         transaction.commit();
         mTitleBar.setTitle(R.string.user_register);
-        tbnGoRegister.setVisibility(View.GONE);
+        btnGoRegister.setVisibility(View.GONE);
     }
 
 }
