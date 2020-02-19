@@ -8,6 +8,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import me.hhs.wanandroid.R;
 import me.hhs.wanandroid.ui.LoginActivity;
+import me.hhs.wanandroid.ui.SystemActivity;
 import me.hhs.wanandroid.utils.SPUtils;
 
 /**
@@ -40,12 +41,18 @@ public class MeFragment extends BaseFragment {
                     startActivityForResult(new Intent(getContext(), LoginActivity.class), 100);
                 break;
             case R.id.ll_user_collect:
-                doToast("我的收藏");
+                if (SPUtils.get(getContext(), "username", getString(R.string.go_login)).equals(getString(R.string.go_login))) {
+                    startActivityForResult(new Intent(getContext(), LoginActivity.class), 101);
+                } else {
+                    Intent collcetIntent = new Intent(getActivity(), SystemActivity.class);
+                    collcetIntent.putExtra("from", "collect");
+                    startActivity(collcetIntent);
+                }
                 break;
             case R.id.ll_system_setting:
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                intent.putExtra("sys", "systemSetting");
-                startActivityForResult(intent, 100);
+                Intent sysIntent = new Intent(getActivity(), SystemActivity.class);
+                sysIntent.putExtra("from", "system");
+                startActivityForResult(sysIntent, 101);
                 break;
             default:
                 break;
@@ -57,6 +64,5 @@ public class MeFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         tvUserName.setText((String) SPUtils.get(getContext(), "username", getString(R.string.go_login)));
         tvUserID.setText((String) SPUtils.get(getContext(), "userid", "id: "));
-
     }
 }

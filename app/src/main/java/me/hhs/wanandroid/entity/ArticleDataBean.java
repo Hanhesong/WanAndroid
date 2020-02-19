@@ -32,6 +32,14 @@ public class ArticleDataBean extends BaseBean {
         this.errMsg = errMsg;
     }
 
+    @Override
+    public String toString() {
+        return "ArticleDataBean{" +
+                "data=" + data +
+                ", errCode=" + errCode +
+                ", errMsg='" + errMsg + '\'' +
+                '}';
+    }
 
 
     public class ArticleData extends BaseBean {
@@ -106,6 +114,19 @@ public class ArticleDataBean extends BaseBean {
 
         public void setDatas(List<Article> datas) {
             this.datas = datas;
+        }
+
+        @Override
+        public String toString() {
+            return "ArticleData{" +
+                    "curPage=" + curPage +
+                    ", offset=" + offset +
+                    ", over=" + over +
+                    ", pageCount=" + pageCount +
+                    ", size=" + size +
+                    ", toatl=" + toatl +
+                    ", datas=" + datas +
+                    '}';
         }
 
         public class Article extends BaseBean {

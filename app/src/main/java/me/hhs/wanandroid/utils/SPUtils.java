@@ -28,7 +28,7 @@ public class SPUtils {
         } else {
             editor.putString(key, (String) obj);
         }
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -57,7 +57,7 @@ public class SPUtils {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.remove(key);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -77,7 +77,7 @@ public class SPUtils {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 
     /**

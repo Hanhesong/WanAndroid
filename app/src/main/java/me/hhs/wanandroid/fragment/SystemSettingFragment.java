@@ -1,7 +1,9 @@
 package me.hhs.wanandroid.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 
 import butterknife.OnClick;
 import me.hhs.wanandroid.R;
@@ -21,6 +23,12 @@ public class SystemSettingFragment extends BaseFragment {
             public void onClick(DialogInterface dialog, int which) {
               //  doToast("退出登录");
                 SPUtils.clear(getContext());
+                //退出后要清除保存的cookie
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cookieData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove("cookie");
+                editor.apply();
+
                 getActivity().setResult(Activity.RESULT_OK,null);
                 getActivity().finish();
             }
