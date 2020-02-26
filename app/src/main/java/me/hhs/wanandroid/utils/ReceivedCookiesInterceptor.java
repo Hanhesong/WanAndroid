@@ -27,7 +27,7 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             HashSet<String> cookies = new HashSet<>();
             for (String header : originalResponse.headers("Set-Cookie")) {
-                Log.i("Songzzz", "拦截的cookie是" + header);
+               // Log.i("Songzzz", "拦截的cookie是" + header);
                 cookies.add(header);
             }
             SharedPreferences sharedPreferences = WanAndroidApplication.getContext().getSharedPreferences("cookieData", Context.MODE_PRIVATE);

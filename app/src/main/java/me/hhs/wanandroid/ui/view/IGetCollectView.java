@@ -1,9 +1,9 @@
 package me.hhs.wanandroid.ui.view;
 
-import me.hhs.wanandroid.entity.ArticleDataBean;
+import me.hhs.wanandroid.entity.CollectArticleBean;
 
 public interface IGetCollectView {
-    void getCollectSuccess(ArticleDataBean articleDataBean);
+    void getCollectSuccess(CollectArticleBean collectArticleBean);
 
     void getCollectFailure(String errorCode, String errorMsg);
 

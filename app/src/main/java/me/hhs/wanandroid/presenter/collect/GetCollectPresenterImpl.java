@@ -2,7 +2,7 @@ package me.hhs.wanandroid.presenter.collect;
 
 import android.content.Context;
 
-import me.hhs.wanandroid.entity.ArticleDataBean;
+import me.hhs.wanandroid.entity.CollectArticleBean;
 import me.hhs.wanandroid.model.collect.CollectModelFactory;
 import me.hhs.wanandroid.model.collect.ICollectModel;
 import me.hhs.wanandroid.ui.view.IGetCollectView;
@@ -24,7 +24,7 @@ public class GetCollectPresenterImpl implements IGetCollectPrecenter {
     }
 
     @Override
-    public void onSuccess(ArticleDataBean data) {
+    public void onSuccess(CollectArticleBean data) {
         view.getCollectSuccess(data);
     }
 
