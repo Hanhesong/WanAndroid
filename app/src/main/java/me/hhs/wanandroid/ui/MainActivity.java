@@ -50,12 +50,12 @@ public class MainActivity extends BaseActivity {
         publicNumberFragment = new PublicNumberFragment();
         meFragment = new MeFragment();
         setDefultFragment();
-      /*  rbHomePage.setOnTouchListener(new onDoubleClickListener(new onDoubleClickListener.DoubleClickCallback() {
+        rbHomePage.setOnTouchListener(new onDoubleClickListener(new onDoubleClickListener.DoubleClickCallback() {
             @Override
             public void onDoubleClick() {
                homePageFragment.onRefreshArticle();
             }
-        })); */
+        }));
     }
 
     private void setDefultFragment() {
