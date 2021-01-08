@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +34,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<ArticleDataBean.ArticleData.Article> list;
     private Context mContext;
     private Retrofit mRetrofit;
-    private ArticleDataBean articleDataBean;
 
 
     public RecyclerViewAdapter(List<ArticleDataBean.ArticleData.Article> list, Context context) {
         this.list = list;
         this.mContext = context;
         mRetrofit = RetrofitUtils.getRetrofit(Serve.BASE_URL);
-        articleDataBean = getCollectArticles(0);
 
     }
 
@@ -49,14 +48,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageButton ibCollect;
         TextView tvArticleAuthor;
         TextView tvArticleCategory;
-        TextView tvArtlcleDate;
+        TextView tvArticleDate;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvArticleTitle = itemView.findViewById(R.id.tv_homefragment_article_title);
             tvArticleAuthor = itemView.findViewById(R.id.tv_homefragment_article_author);
             tvArticleCategory = itemView.findViewById(R.id.tv_homefragment_article_category);
-            tvArtlcleDate = itemView.findViewById(R.id.tv_homefragment_article_date);
+            tvArticleDate = itemView.findViewById(R.id.tv_homefragment_article_date);
             ibCollect = itemView.findViewById(R.id.ib_fragment_artitle_collect);
         }
     }
@@ -75,7 +74,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         myViewHolder.tvArticleTitle.setText(list.get(i).getTitle());
         myViewHolder.tvArticleAuthor.setText(list.get(i).getAuthor());
         myViewHolder.tvArticleCategory.setText(list.get(i).getSuperChapterName() + "/" + list.get(i).getChapterName());
-        myViewHolder.tvArtlcleDate.setText(list.get(i).getNiceDate());
+        myViewHolder.tvArticleDate.setText(list.get(i).getNiceDate());
+        myViewHolder.ibCollect.setSelected(list.get(i).isCollect());
         myViewHolder.ibCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,13 +93,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
         });
-      /*  if (articleDataBean != null && articleDataBean.getData() != null) {
-            for (int a = 0; a < articleDataBean.getData().getDatas().size(); a++) {
-                if (articleDataBean.getData().getDatas().get(a).getTitle().equals(list.get(i).getTitle())) {
-                    myViewHolder.ibCollect.setSelected(true);
-                }
-            }
-        } */
 
         //这个方法是加载相应图片的，暂时用不到。
         // Glide.with(mContext).load(R.drawable.selector_collect).into(myViewHolder.ibCollect);
@@ -175,26 +168,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Call<ArticleDataBean> getCollect(@Path("page") int page);
 
     }
-
-    public ArticleDataBean getCollectArticles(int page) {
-        GetCollectArticlesService service = mRetrofit.create(GetCollectArticlesService.class);
-        Call<ArticleDataBean> call = service.getCollect(page);
-        Callback<ArticleDataBean> callback = new Callback<ArticleDataBean>() {
-            @Override
-            public void onResponse(Call<ArticleDataBean> call, Response<ArticleDataBean> response) {
-                if (response.body() != null && response.body().getErrCode() == 0) {
-                    articleDataBean = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArticleDataBean> call, Throwable t) {
-
-            }
-        };
-        call.enqueue(callback);
-        return articleDataBean;
-    }
-
 
 }
