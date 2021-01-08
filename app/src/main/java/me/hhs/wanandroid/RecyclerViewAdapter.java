@@ -70,12 +70,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewAdapter.MyViewHolder myViewHolder, final int i) {
+        final ArticleDataBean.ArticleData.Article  article = list.get(i);
         final int id = list.get(i).getId();
-        myViewHolder.tvArticleTitle.setText(list.get(i).getTitle());
-        myViewHolder.tvArticleAuthor.setText(list.get(i).getAuthor());
-        myViewHolder.tvArticleCategory.setText(list.get(i).getSuperChapterName() + "/" + list.get(i).getChapterName());
-        myViewHolder.tvArticleDate.setText(list.get(i).getNiceDate());
-        myViewHolder.ibCollect.setSelected(list.get(i).isCollect());
+        myViewHolder.tvArticleTitle.setText(article.getTitle());
+        myViewHolder.tvArticleAuthor.setText(article.getAuthor());
+        myViewHolder.tvArticleCategory.setText(article.getSuperChapterName() + "/" + article.getChapterName());
+        myViewHolder.tvArticleDate.setText(article.getNiceDate());
+        myViewHolder.ibCollect.setSelected(article.isCollect());
         myViewHolder.ibCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +84,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     myViewHolder.ibCollect.setSelected(false);
                     //访问取消收藏的api
                     unCollectArticle(id);
+                    article.setCollect(false);
                 } else if (SPUtils.get(mContext, "username", mContext.getString(R.string.go_login)).equals(mContext.getString(R.string.go_login))) {
                     //跳转到登录界面
                     mContext.startActivity(new Intent(mContext, LoginActivity.class));
@@ -90,6 +92,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     myViewHolder.ibCollect.setSelected(true);
                     //访问收藏的api
                     collectArticle(id);
+                    article.setCollect(true);
                 }
             }
         });
