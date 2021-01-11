@@ -50,12 +50,13 @@ public class MainActivity extends BaseActivity {
         publicNumberFragment = new PublicNumberFragment();
         meFragment = new MeFragment();
         setDefultFragment();
-        rbHomePage.setOnTouchListener(new onDoubleClickListener(new onDoubleClickListener.DoubleClickCallback() {
+        //会和点击事件冲突
+      /*  rbHomePage.setOnTouchListener(new onDoubleClickListener(new onDoubleClickListener.DoubleClickCallback() {
             @Override
             public void onDoubleClick() {
                homePageFragment.onRefreshArticle();
             }
-        }));
+        })); */
     }
 
     private void setDefultFragment() {
@@ -72,6 +73,7 @@ public class MainActivity extends BaseActivity {
         switch (button.getId()) {
             case R.id.rb_homePage:
                 transaction.replace(R.id.fl_content, homePageFragment);
+                homePageFragment.onRefreshArticle();
                 break;
             case R.id.rb_structure:
                 transaction.replace(R.id.fl_content, structureFragment);

@@ -195,6 +195,7 @@ public class HomePageFragment extends BaseFragment implements IGetArticlesView, 
     }
 
     public void onRefreshArticle(){
-        smartRefreshLayout.autoRefresh(500);
+        if (smartRefreshLayout!=null)
+            smartRefreshLayout.autoRefresh(500);
     }
 }
